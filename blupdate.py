@@ -71,7 +71,7 @@ title_entry.pack()
 # Create the body text area
 body_label = tk.Label(root, text="Body:")
 body_label.pack()
-body_text = scrolledtext.ScrolledText(root, width=60, height=10)
+body_text = scrolledtext.ScrolledText(root, width=100, height=10)
 body_text.pack()
 
 # Create the post button

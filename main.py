@@ -5,28 +5,31 @@ import os
 
 def post_content():
     title = title_entry.get()
-    body = body_text.get("1.0", tk.END)
+    body = body_text.get("1.0", tk.END).strip()  # .strip() to remove trailing newline
     date_str = datetime.now().strftime("%B %d, %Y")
     
+    # Define the file paths
+    html_file_path = '/Users/jamielaguerta/Desktop/Website/jalaguerta.github.io/blog.html'  # Replace with the correct path to your HTML file
+    
     # Read the existing HTML content
-    with open('index.html', 'r', encoding='utf-8') as file:
+    with open(html_file_path, 'r', encoding='utf-8') as file:
         original_content = file.read()
 
     # Create the new section
-    new_section = f"<section>\n\t<h1>{date_str} - {title}</h1>\n\t<p>{body}</p>\n</section>\n"
+    new_section = f"<div>\n\t<h2>{date_str} - {title}</h2>\n\t<p>{body}</p>\n</div>\n"
     
-    # Insert the new section at the beginning of the body
-    updated_content = original_content.replace('<body>', f'<body>\n{new_section}')
+    # Insert the new section after the <h1>Technical Blog</h1>
+    updated_content = original_content.replace('<h1>Technical Blog</h1>', f'<h1>Technical Blog</h1>\n{new_section}')
     
     # Write the updated HTML content back to the file
-    with open('index.html', 'w', encoding='utf-8') as file:
+    with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(updated_content)
     
     print("Content posted!")
 
 # Create the main window
 root = tk.Tk()
-root.title("HTML Content Updater")
+root.title("Blog Content Updater")
 
 # Create the title entry
 title_label = tk.Label(root, text="Title:")

@@ -1,7 +1,29 @@
 import tkinter as tk
 from tkinter import scrolledtext
+from tkinter import scrolledtext, messagebox
 from datetime import datetime
+import subprocess
 import os
+
+def git_push():
+    try:
+        # Navigate to the repository directory (replace 'path/to/repo' with the actual path)
+        repo_path = '/Users/jamielaguerta/Desktop/Website/jalaguerta.github.io'
+        os.chdir(repo_path)
+        
+        # Add the file to the staging area
+        subprocess.check_call(['git', 'add', 'blog.html'])
+        
+        # Commit the change
+        commit_message = "Update blog content"
+        subprocess.check_call(['git', 'commit', '-m', commit_message])
+        
+        # Push the change
+        subprocess.check_call(['git', 'push', 'origin', 'main'])
+        print("Changes pushed to GitHub.")
+    except subprocess.CalledProcessError as e:
+        print("Failed to push changes to GitHub:", e)
+
 
 def post_content():
     title = title_entry.get()
@@ -9,7 +31,7 @@ def post_content():
     date_str = datetime.now().strftime("%B %d, %Y")
     
     # Define the file paths
-    html_file_path = '/Users/jamielaguerta/Desktop/Website/jalaguerta.github.io/blog.html'  # Replace with the correct path to your HTML file
+    html_file_path = '/Users/jamielaguerta/Desktop/Website/jalaguerta.github.io/blog.html'  
     
     # Read the existing HTML content
     with open(html_file_path, 'r', encoding='utf-8') as file:
@@ -24,8 +46,16 @@ def post_content():
     # Write the updated HTML content back to the file
     with open(html_file_path, 'w', encoding='utf-8') as file:
         file.write(updated_content)
+
+    git_push()
+
+        # Show a popup message
+    messagebox.showinfo("Content Posted", "Your content has been posted!")
     
     print("Content posted!")
+    
+    # Close the Tkinter window
+    root.destroy()
 
 # Create the main window
 root = tk.Tk()

@@ -28,7 +28,8 @@ def git_push():
 def post_content():
     title = title_entry.get()
     body = body_text.get("1.0", tk.END).strip()  # .strip() to remove trailing newline
-    date_str = datetime.now().strftime("%B %d, %Y")
+    date_str = datetime.now().strftime("%B %d, %Y %H:%M:%S")
+
     
     # Define the file paths
     html_file_path = '/Users/jamielaguerta/Desktop/Website/jalaguerta.github.io/blog.html'  
